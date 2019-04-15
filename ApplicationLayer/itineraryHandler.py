@@ -100,9 +100,9 @@ class ItineraryHandler:
                 itinerary_list.append(result)
             return jsonify(Itineraries=itinerary_list)
 
-    def getItineraryByDriverId(self, driver_id):
+    def getItinerariesByDriverId(self, driver_id):
         dao = ItineraryDao()
-        result = dao.getItineraryByDriverId(driver_id)
+        result = dao.getItinerariesByDriverId(driver_id)
 
         if not result:
             return jsonify(Error="Itinerary Not Found"), 404
@@ -110,9 +110,9 @@ class ItineraryHandler:
             itinerary = self.build_itinerary_dict(result)
             return jsonify(Itinerary=itinerary)
 
-    def getItineraryByTrolleyId(self, trolley_id):
+    def getItinerariesByTrolleyId(self, trolley_id):
         dao = ItineraryDao()
-        result = dao.getItineraryByTrolleyId(trolley_id)
+        result = dao.getItinerariesByTrolleyId(trolley_id)
 
         if not result:
             return jsonify(Error="Itinerary Not Found"), 404
@@ -120,9 +120,9 @@ class ItineraryHandler:
             itinerary = self.build_itinerary_dict(result)
             return jsonify(Itinerary=itinerary)
 
-    def getItineraryByRouteId(self, route_id):
+    def getItinerariesByRouteId(self, route_id):
         dao = ItineraryDao()
-        result = dao.getItineraryByrouteId(route_id)
+        result = dao.getItinerariesByRouteId(route_id)
 
         if not result:
             return jsonify(Error="Itinerary Not Found"), 404
