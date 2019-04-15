@@ -1,31 +1,23 @@
 from flask import jsonify
 from InfrastructureLayer.driverDAO import DriverDao
+from DomainLayer.driver import Driver
 
 
 class DriverHandler:
     # Schema: driver_id, first_name, last_name, license, phone
-
-    def build_driver_dict(self, row):
-        result = {}
-        result['driver_id'] = row[0]
-        result['first_name'] = row[1]
-        result['last_name'] = row[2]
-        result['license'] = row[3]
-        result['phone'] = row[4]
-
-        return result
-
+    
     # Gets
     def getAllDrivers(self):
         dao = DriverDao()
-        result_list = dao.getAllDrivers()
-        driver_list = []
+        driver_list = dao.getAllDrivers()
+        result_list = []
 
-        for row in result_list:
-            result = self.build_driver_dict(row)
-            driver_list.append(result)
+        for row in driver_list:
+            driver = Driver(row)
+            result = driver.driverInfo()
+            result_list.append(result)
 
-        return jsonify(Driver=driver_list)
+        return jsonify(Driver=result_list)
 
     def getDriverById(self, driver_id):
         dao = DriverDao()
@@ -34,7 +26,8 @@ class DriverHandler:
         if not row:
             return jsonify(Error="Driver Not Found"), 404
         else:
-            driver = self. build_driver_dict(row)
+            driver = Driver(row)
+            driver = driver.driverInfo()
             return jsonify(Driver=driver)
 
     def getDriversByFirstName(self, first_name):
@@ -46,7 +39,8 @@ class DriverHandler:
             return jsonify(Error="Drivers Not Found"), 404
         else:
             for row in driver_list:
-                result = self.build_driver_dict(row)
+                driver = Driver(row)
+                result = driver.driverInfo()
                 result_list.append(result)
             return jsonify(Driver=result_list)
 
@@ -59,7 +53,8 @@ class DriverHandler:
             return jsonify(Error="Drivers Not Found"), 404
         else:
             for row in driver_list:
-                result = self.build_driver_dict(row)
+                driver = Driver(row)
+                result = driver.driverInfo()
                 result_list.append(result)
             return jsonify(Driver=result_list)
 
@@ -74,7 +69,8 @@ class DriverHandler:
             return jsonify(Error="Drivers Not Found"), 404
         else:
             for row in driver_list:
-                result = self.build_driver_dict(row)
+                driver = Driver(row)
+                result = driver.driverInfo()
                 result_list.append(result)
             return jsonify(Drivers=result_list)
 
@@ -87,7 +83,8 @@ class DriverHandler:
         elif not row:
             return jsonify(Error="Driver Not Found"), 404
         else:
-            driver = self. build_driver_dict(row)
+            driver = Driver(row)
+            driver = driver.driverInfo()
             return jsonify(Driver=driver)
 
     def getDriverByPhone(self, phone):
@@ -99,7 +96,8 @@ class DriverHandler:
         elif not row:
             return jsonify(Error="Driver Not Found"), 404
         else:
-            driver = self. build_driver_dict(row)
+            driver = Driver(row)
+            driver = driver.driverInfo()
             return jsonify(Driver=driver)
 
 '''
@@ -118,7 +116,7 @@ class DriverHandler:
 
         result = self.build_driver_dict(driver)
         return jsonify(Driver=result), 200
-
+d
     def deleteDriver(self, driver_id):
         return jsonify(DeleteStatus="OK"), 200
 '''

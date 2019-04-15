@@ -1,4 +1,10 @@
 class Route:
-	def __init__(self, route_id=None, route_name=None):
-		self.route_id = route_id
-		self.route_name = route_name
+	def __init__(self, data):
+		self.route = {}
+        self.route['route_id'] = data[0]
+        self.route['route_name'] = data[1]
+
+    def routeInfo():
+    	return self.route
+
+    def stop

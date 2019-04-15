@@ -1,6 +1,10 @@
 class Trolley:
-	def __init__(self, trolley_id=None, plate=None, capacity=None, mileage=None):
-		self.trolley_id = trolley_id
-		self.plate = plate
-		self.capacity = capacity
-		self.mileage = mileage
+	def __init__(self, data):
+		self.trolley = {}
+        self.trolley['trolley_id'] = data[0]
+        self.trolley['plate'] = data[1]
+        self.trolley['capacity'] = data[2]
+        self.trolley['mileage'] = data[3]
+
+    def trolleyInfo(self):
+    	return self.trolley

@@ -1,0 +1,456 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: drivers; Type: TABLE; Schema: public; Owner: caambus
+--
+
+CREATE TABLE public.drivers (
+    driver_id integer NOT NULL,
+    first_name character varying(20),
+    last_name character varying(20),
+    license integer,
+    phone bigint
+);
+
+
+ALTER TABLE public.drivers OWNER TO caambus;
+
+--
+-- Name: drivers_driver_id_seq; Type: SEQUENCE; Schema: public; Owner: caambus
+--
+
+CREATE SEQUENCE public.drivers_driver_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.drivers_driver_id_seq OWNER TO caambus;
+
+--
+-- Name: drivers_driver_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: caambus
+--
+
+ALTER SEQUENCE public.drivers_driver_id_seq OWNED BY public.drivers.driver_id;
+
+
+--
+-- Name: itineraries; Type: TABLE; Schema: public; Owner: caambus
+--
+
+CREATE TABLE public.itineraries (
+    itinerary_id integer NOT NULL,
+    date date,
+    start_time time without time zone,
+    end_time time without time zone,
+    driver_id integer,
+    trolley_id integer,
+    route_id integer
+);
+
+
+ALTER TABLE public.itineraries OWNER TO caambus;
+
+--
+-- Name: itineraries_itinerary_id_seq; Type: SEQUENCE; Schema: public; Owner: caambus
+--
+
+CREATE SEQUENCE public.itineraries_itinerary_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.itineraries_itinerary_id_seq OWNER TO caambus;
+
+--
+-- Name: itineraries_itinerary_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: caambus
+--
+
+ALTER SEQUENCE public.itineraries_itinerary_id_seq OWNED BY public.itineraries.itinerary_id;
+
+
+--
+-- Name: routes; Type: TABLE; Schema: public; Owner: caambus
+--
+
+CREATE TABLE public.routes (
+    route_id integer NOT NULL,
+    route_name character varying(25)
+);
+
+
+ALTER TABLE public.routes OWNER TO caambus;
+
+--
+-- Name: routes_route_id_seq; Type: SEQUENCE; Schema: public; Owner: caambus
+--
+
+CREATE SEQUENCE public.routes_route_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.routes_route_id_seq OWNER TO caambus;
+
+--
+-- Name: routes_route_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: caambus
+--
+
+ALTER SEQUENCE public.routes_route_id_seq OWNED BY public.routes.route_id;
+
+
+--
+-- Name: stops; Type: TABLE; Schema: public; Owner: caambus
+--
+
+CREATE TABLE public.stops (
+    stop_id integer NOT NULL,
+    stop_name character varying(25),
+    latitude double precision,
+    longitude double precision
+);
+
+
+ALTER TABLE public.stops OWNER TO caambus;
+
+--
+-- Name: stops_stop_id_seq; Type: SEQUENCE; Schema: public; Owner: caambus
+--
+
+CREATE SEQUENCE public.stops_stop_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.stops_stop_id_seq OWNER TO caambus;
+
+--
+-- Name: stops_stop_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: caambus
+--
+
+ALTER SEQUENCE public.stops_stop_id_seq OWNED BY public.stops.stop_id;
+
+
+--
+-- Name: stopsinroutes; Type: TABLE; Schema: public; Owner: caambus
+--
+
+CREATE TABLE public.stopsinroutes (
+    route_id integer NOT NULL,
+    stop_id integer NOT NULL
+);
+
+
+ALTER TABLE public.stopsinroutes OWNER TO caambus;
+
+--
+-- Name: trolleys; Type: TABLE; Schema: public; Owner: caambus
+--
+
+CREATE TABLE public.trolleys (
+    trolley_id integer NOT NULL,
+    plate character varying(8),
+    capacity integer,
+    mileage double precision
+);
+
+
+ALTER TABLE public.trolleys OWNER TO caambus;
+
+--
+-- Name: trolleys_trolley_id_seq; Type: SEQUENCE; Schema: public; Owner: caambus
+--
+
+CREATE SEQUENCE public.trolleys_trolley_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.trolleys_trolley_id_seq OWNER TO caambus;
+
+--
+-- Name: trolleys_trolley_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: caambus
+--
+
+ALTER SEQUENCE public.trolleys_trolley_id_seq OWNED BY public.trolleys.trolley_id;
+
+
+--
+-- Name: drivers driver_id; Type: DEFAULT; Schema: public; Owner: caambus
+--
+
+ALTER TABLE ONLY public.drivers ALTER COLUMN driver_id SET DEFAULT nextval('public.drivers_driver_id_seq'::regclass);
+
+
+--
+-- Name: itineraries itinerary_id; Type: DEFAULT; Schema: public; Owner: caambus
+--
+
+ALTER TABLE ONLY public.itineraries ALTER COLUMN itinerary_id SET DEFAULT nextval('public.itineraries_itinerary_id_seq'::regclass);
+
+
+--
+-- Name: routes route_id; Type: DEFAULT; Schema: public; Owner: caambus
+--
+
+ALTER TABLE ONLY public.routes ALTER COLUMN route_id SET DEFAULT nextval('public.routes_route_id_seq'::regclass);
+
+
+--
+-- Name: stops stop_id; Type: DEFAULT; Schema: public; Owner: caambus
+--
+
+ALTER TABLE ONLY public.stops ALTER COLUMN stop_id SET DEFAULT nextval('public.stops_stop_id_seq'::regclass);
+
+
+--
+-- Name: trolleys trolley_id; Type: DEFAULT; Schema: public; Owner: caambus
+--
+
+ALTER TABLE ONLY public.trolleys ALTER COLUMN trolley_id SET DEFAULT nextval('public.trolleys_trolley_id_seq'::regclass);
+
+
+--
+-- Data for Name: drivers; Type: TABLE DATA; Schema: public; Owner: caambus
+--
+
+COPY public.drivers (driver_id, first_name, last_name, license, phone) FROM stdin;
+1	Julian	Cuevas	6523031	7876074678
+2	Raul	Mojica	6523231	7875434237
+\.
+
+
+--
+-- Data for Name: itineraries; Type: TABLE DATA; Schema: public; Owner: caambus
+--
+
+COPY public.itineraries (itinerary_id, date, start_time, end_time, driver_id, trolley_id, route_id) FROM stdin;
+1	2019-04-04	08:00:00	12:00:00	1	1	1
+2	2019-04-04	13:00:00	19:00:00	2	2	1
+3	2019-04-04	08:00:00	12:00:00	2	2	2
+4	2019-04-04	13:00:00	19:00:00	1	1	2
+\.
+
+
+--
+-- Data for Name: routes; Type: TABLE DATA; Schema: public; Owner: caambus
+--
+
+COPY public.routes (route_id, route_name) FROM stdin;
+1	Dummy Route #1
+2	Dummy Route #2
+\.
+
+
+--
+-- Data for Name: stops; Type: TABLE DATA; Schema: public; Owner: caambus
+--
+
+COPY public.stops (stop_id, stop_name, latitude, longitude) FROM stdin;
+1	Zoologico	18.2156651246421148	-67.1336746215820455
+2	Biologia	18.2118739652150659	-67.138330936431899
+3	Fisica	18.2108599179901276	-67.139629125595107
+4	Patio Central	18.2112624801580374	-67.1408468484878682
+\.
+
+
+--
+-- Data for Name: stopsinroutes; Type: TABLE DATA; Schema: public; Owner: caambus
+--
+
+COPY public.stopsinroutes (route_id, stop_id) FROM stdin;
+1	1
+1	2
+1	3
+\.
+
+
+--
+-- Data for Name: trolleys; Type: TABLE DATA; Schema: public; Owner: caambus
+--
+
+COPY public.trolleys (trolley_id, plate, capacity, mileage) FROM stdin;
+1	GFN091	24	60000
+2	ASL045	32	60000
+\.
+
+
+--
+-- Name: drivers_driver_id_seq; Type: SEQUENCE SET; Schema: public; Owner: caambus
+--
+
+SELECT pg_catalog.setval('public.drivers_driver_id_seq', 2, true);
+
+
+--
+-- Name: itineraries_itinerary_id_seq; Type: SEQUENCE SET; Schema: public; Owner: caambus
+--
+
+SELECT pg_catalog.setval('public.itineraries_itinerary_id_seq', 4, true);
+
+
+--
+-- Name: routes_route_id_seq; Type: SEQUENCE SET; Schema: public; Owner: caambus
+--
+
+SELECT pg_catalog.setval('public.routes_route_id_seq', 2, true);
+
+
+--
+-- Name: stops_stop_id_seq; Type: SEQUENCE SET; Schema: public; Owner: caambus
+--
+
+SELECT pg_catalog.setval('public.stops_stop_id_seq', 4, true);
+
+
+--
+-- Name: trolleys_trolley_id_seq; Type: SEQUENCE SET; Schema: public; Owner: caambus
+--
+
+SELECT pg_catalog.setval('public.trolleys_trolley_id_seq', 2, true);
+
+
+--
+-- Name: drivers drivers_pkey; Type: CONSTRAINT; Schema: public; Owner: caambus
+--
+
+ALTER TABLE ONLY public.drivers
+    ADD CONSTRAINT drivers_pkey PRIMARY KEY (driver_id);
+
+
+--
+-- Name: itineraries itineraries_pkey; Type: CONSTRAINT; Schema: public; Owner: caambus
+--
+
+ALTER TABLE ONLY public.itineraries
+    ADD CONSTRAINT itineraries_pkey PRIMARY KEY (itinerary_id);
+
+
+--
+-- Name: routes routes_pkey; Type: CONSTRAINT; Schema: public; Owner: caambus
+--
+
+ALTER TABLE ONLY public.routes
+    ADD CONSTRAINT routes_pkey PRIMARY KEY (route_id);
+
+
+--
+-- Name: stops stops_pkey; Type: CONSTRAINT; Schema: public; Owner: caambus
+--
+
+ALTER TABLE ONLY public.stops
+    ADD CONSTRAINT stops_pkey PRIMARY KEY (stop_id);
+
+
+--
+-- Name: stopsinroutes stopsinroutes_pkey; Type: CONSTRAINT; Schema: public; Owner: caambus
+--
+
+ALTER TABLE ONLY public.stopsinroutes
+    ADD CONSTRAINT stopsinroutes_pkey PRIMARY KEY (route_id, stop_id);
+
+
+--
+-- Name: trolleys trolleys_pkey; Type: CONSTRAINT; Schema: public; Owner: caambus
+--
+
+ALTER TABLE ONLY public.trolleys
+    ADD CONSTRAINT trolleys_pkey PRIMARY KEY (trolley_id);
+
+
+--
+-- Name: itineraries itineraries_driver_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: caambus
+--
+
+ALTER TABLE ONLY public.itineraries
+    ADD CONSTRAINT itineraries_driver_id_fkey FOREIGN KEY (driver_id) REFERENCES public.drivers(driver_id);
+
+
+--
+-- Name: itineraries itineraries_route_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: caambus
+--
+
+ALTER TABLE ONLY public.itineraries
+    ADD CONSTRAINT itineraries_route_id_fkey FOREIGN KEY (route_id) REFERENCES public.routes(route_id);
+
+
+--
+-- Name: itineraries itineraries_trolley_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: caambus
+--
+
+ALTER TABLE ONLY public.itineraries
+    ADD CONSTRAINT itineraries_trolley_id_fkey FOREIGN KEY (trolley_id) REFERENCES public.trolleys(trolley_id);
+
+
+--
+-- Name: stopsinroutes stopsinroutes_route_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: caambus
+--
+
+ALTER TABLE ONLY public.stopsinroutes
+    ADD CONSTRAINT stopsinroutes_route_id_fkey FOREIGN KEY (route_id) REFERENCES public.routes(route_id);
+
+
+--
+-- Name: stopsinroutes stopsinroutes_stop_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: caambus
+--
+
+ALTER TABLE ONLY public.stopsinroutes
+    ADD CONSTRAINT stopsinroutes_stop_id_fkey FOREIGN KEY (stop_id) REFERENCES public.stops(stop_id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

@@ -4,17 +4,8 @@ from InfrastructureLayer.trolleyDAO import TrolleyDao
 
 class TrolleyHandler:
     # Schema: trolley_id, plate, capacity, mileage
-
-    def build_trolley_dict(self, row):
-        result = {}
-        result['trolley_id'] = row[0]
-        result['plate'] = row[1]
-        result['capacity'] = row[2]
-        result['mileage'] = row[3]
-
-        return result
-
     # Gets
+    
     def getAllTrolleys(self):
         dao = TrolleyDao()
         result_list = dao.getAllTrolleys()
