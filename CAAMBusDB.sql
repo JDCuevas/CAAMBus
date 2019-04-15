@@ -16,10 +16,10 @@ CREATE TABLE Routes
 (route_id serial PRIMARY KEY, route_name varchar(25));
 
 CREATE TABLE Stops
-(stop_id SERIAL PRIMARY KEY, stop_name varchar(25), latitude float, longitude foat);
+(stop_id SERIAL PRIMARY KEY, stop_name varchar(25), latitude float, longitude float);
 
 CREATE TABLE StopsInRoutes 
-(route_id integer REFERENCES Routes(route_id), stop_id integer REFERENCES Stopsstop_id), primary key (route_id, stop_id));
+(route_id integer REFERENCES Routes(route_id), stop_id integer REFERENCES Stops(stop_id), primary key (route_id, stop_id));
 
 CREATE TABLE Trolleys 
 (trolley_id SERIAL PRIMARY KEY, plate varchar(8), capacity integer, mileage float);
