@@ -47,13 +47,13 @@ class TrolleyHandler:
         else:
             for row in result_list:
                 result = self.build_trolley_dict(row)
-                trolleys_list.append(row)
+                trolleys_list.append(result)
             return jsonify(Trolleys=trolleys_list)
 
     # Whats the use for this? Better to specify a range
-    def getTrolleysByMileageRange(self, mileage):
+    def getTrolleysByMileageRange(self, mileage_low, mileage_high):
         dao = TrolleyDao()
-        result_list = dao.getTrolleysByMileage(mileage)
+        result_list = dao.getTrolleysByMileageRange(mileage_low, mileage_high)
         trolleys_list = []
 
         if not result_list:
@@ -61,7 +61,7 @@ class TrolleyHandler:
         else:
             for row in result_list:
                 result = self.build_trolley_dict(row)
-                trolleys_list.append(row)
+                trolleys_list.append(result)
             return jsonify(Trolleys=trolleys_list)
     '''
     # CRUDS

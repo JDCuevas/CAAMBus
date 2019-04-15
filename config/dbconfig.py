@@ -3,6 +3,6 @@
 
 pg_config = {
     'user' : 'caambus',
-    'passwd' : '',
+    'passwd' : 'caambus',
     'dbname' : 'caambus'
 }
