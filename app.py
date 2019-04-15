@@ -1,9 +1,9 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
-from handler.driverHandler import DriverHandler
-from handler.trolleyHandler import TrolleyHandler
-from handler.routeHandler import RouteHandler
-from handler.itineraryHandler import ItineraryHandler
+from ApplicationLayer.driverHandler import DriverHandler
+from ApplicationLayer.trolleyHandler import TrolleyHandler
+from ApplicationLayer.routeHandler import RouteHandler
+from ApplicationLayer.itineraryHandler import ItineraryHandler
 
 
 app = Flask(__name__)
