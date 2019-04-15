@@ -1,10 +1,15 @@
 class Route:
-	def __init__(self, data):
+	def __init__(self, data=None):
 		self.route = {}
-        self.route['route_id'] = data[0]
-        self.route['route_name'] = data[1]
+		self.stops = []
+
+		if data.length() == 2:
+	        self.route['route_id'] = data[0]
+	        self.route['route_name'] = data[1]
+	    else:
 
     def routeInfo():
     	return self.route
 
-    def stop
+    def stops():
+    	pass
