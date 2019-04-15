@@ -1,11 +1,38 @@
-export default class Route {
-    constructor(props) {
-        this.id = props.id;
-        this.date = props.date;
-        this.start_time = props.start_time;
-        this.end_time = props.end_time;
-        this.driver_id = props.driver_id;
-        this.trolley_id = props.trolley_id;
-        this.route_id = props.route_id;
+var Itinerary = (data) => {
+    return {
+        name: "Itinerary",
+        columns: [
+            {
+                Header: "ID",
+                accessor: "id",
+            },
+            {
+                Header: "Date",
+                accessor: "date",
+            },
+            {
+                Header: "Start Time",
+                accessor: "start_time",
+            },
+            {
+                Header: "End Time",
+                accessor: "end_time",
+            },
+            {
+                Header: "Driver ID",
+                accessor: "driver_id",
+            },
+            {
+                Header: "Trolley ID",
+                accessor: "trolley_id",
+            },
+            {
+                Header: "Route ID",
+                accessor: "route_id",
+            },
+        ],
+        data: data
     }
 }
+
+export default Itinerary;
