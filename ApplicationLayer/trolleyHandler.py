@@ -17,6 +17,15 @@ class TrolleyHandler:
 
         return jsonify(Trolleys=trolleys_list)
 
+    def build_trolley_dict(self, row):
+        result = {}
+        result['trolley_id'] = row[0]
+        result['plate'] = row[1]
+        result['capacity'] = row[2]
+        result['mileage'] = row[3]
+
+        return result
+
     def getTrolleyById(self, trolley_id):
         dao = TrolleyDao()
         row = dao.getTrolleyById(trolley_id)

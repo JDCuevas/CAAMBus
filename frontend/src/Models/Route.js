@@ -8,7 +8,7 @@ var Route = function(data) {
             },
             {
                 Header: "Route Name",
-                accessor: "name",
+                accessor: "route_name",
             },
         ],
         data: data
