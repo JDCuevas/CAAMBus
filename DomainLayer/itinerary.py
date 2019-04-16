@@ -13,7 +13,6 @@ class Itinerary:
 		else:
 			self.fullItineraryInfo(data)
 
-
 	def itineraryInfo(self):
 		return self.itinerary
 

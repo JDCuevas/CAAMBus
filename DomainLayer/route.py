@@ -3,8 +3,9 @@ class Route:
 		self.route = {}
 		self.stops = []
 
-		self.route['route_id'] = data[0]
-		self.route['route_name'] = data[1]
+		if data:
+			self.route['route_id'] = data[0]
+			self.route['route_name'] = data[1]
 
 	def routeInfo(self):
 		return self.route

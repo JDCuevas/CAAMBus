@@ -6,38 +6,6 @@ class ItineraryHandler:
     # Schema: itinerary_id, date, start_time, end_time, driver_id, trolley_id, route_id
     dao = ItineraryDao()
 
-    def build_itinerary_dict(self, row):
-        result = {}
-        result['itinerary_id'] = row[0]
-        result['date'] = row[1].__str__()
-        result['start_time'] = row[2].__str__()
-        result['end_time'] = row[3].__str__()
-        result['driver_id'] = row[4]
-        result['trolley_id'] = row[5]
-        result['route_id'] = row[6]
-
-        return result
-
-    def build_full_itinerary_dict(self, row):
-        result = {}
-        result['itinerary_id'] = row[0]
-        result['driver_id'] = row[1]
-        result['trolley_id'] = row[2]
-        result['route_id'] = row[3]
-        result['date'] = row[4].__str__()
-        result['start_time'] = row[5].__str__()
-        result['end_time'] = row[6].__str__()
-        result['first_name'] = row[7]
-        result['last_name'] = row[8]
-        result['license'] = row[9]
-        result['phone'] = row[10]
-        result['plate'] = row[11]
-        result['capacity'] = row[12]
-        result['mileage'] = row[13]
-        result['route_name'] = row[14]
-
-        return result
-
     # Gets
     def getAllItineraries(self):
         result_list = self.dao.getAllItineraries()
@@ -134,7 +102,7 @@ class ItineraryHandler:
             itinerary = Itinerary(result)
             itinerary = itinerary.itineraryInfo()
             return jsonify(Itinerary=itinerary)
-            
+
     def getFullItineraryDetails(self, itinerary_id):
         result = self.dao.getFullItineraryDetails(itinerary_id)
 

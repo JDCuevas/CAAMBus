@@ -8,13 +8,15 @@ class Driver:
 		self.phone = phone
 	'''
 
-	def __init__(self, data):
+	def __init__(self, data=None):
 		self.driver = {}
-		self.driver['driver_id'] = data[0]
-		self.driver['first_name'] = data[1]
-		self.driver['last_name'] = data[2]
-		self.driver['license'] = data[3]
-		self.driver['phone'] = data[4]
+
+		if data:
+			self.driver['driver_id'] = data[0]
+			self.driver['first_name'] = data[1]
+			self.driver['last_name'] = data[2]
+			self.driver['license'] = data[3]
+			self.driver['phone'] = data[4]
 
 	def driverInfo(self):
 		return self.driver
