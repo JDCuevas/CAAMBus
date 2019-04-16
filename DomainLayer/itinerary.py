@@ -1,9 +1,36 @@
 class Itinerary:
-	def __init__(self, itinerary_id=None, date=None, start_time=None, end_time=None, driver_id=None, trolley_id=None, route_id=None):
-		self.itinerary_id = itinerary_id
-		self.date = date
-		self.start_time = start_time
-		self.end_time = end_time
-		self.driver_id = driver_id
-		self.trolley_id = trolley_id
-		self.route_id = route_id
+	def __init__(self, data=None):
+		self.itinerary = {}
+		print(data)
+		if len(data) <= 7:
+			self.itinerary['itinerary_id'] = data[0]
+			self.itinerary['date'] = data[1].__str__()
+			self.itinerary['start_time'] = data[2].__str__()
+			self.itinerary['end_time'] = data[3].__str__()
+			self.itinerary['driver_id'] = data[4]
+			self.itinerary['trolley_id'] = data[5]
+			self.itinerary['route_id'] = data[6]
+		else:
+			self.fullItineraryInfo(data)
+
+
+	def itineraryInfo(self):
+		return self.itinerary
+
+	def fullItineraryInfo(self, data):
+			print(data)
+			self.itinerary['itinerary_id'] = data[0]
+			self.itinerary['date'] = data[1].__str__()
+			self.itinerary['start_time'] = data[2].__str__()
+			self.itinerary['end_time'] = data[3].__str__()
+			self.itinerary['driver_id'] = data[4]
+			self.itinerary['first_name'] = data[5]
+			self.itinerary['last_name'] = data[6]
+			self.itinerary['license'] = data[7]
+			self.itinerary['phone'] = data[8]
+			self.itinerary['trolley_id'] = data[9]
+			self.itinerary['plate'] = data[10]
+			self.itinerary['capacity'] = data[11]
+			self.itinerary['mileage'] = data[12]
+			self.itinerary['route_id'] = data[13]
+			self.itinerary['route_name'] = data[14]

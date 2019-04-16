@@ -43,11 +43,24 @@ class RouteDao:
 
         return result
 
+#    def getRouteStops(self, route_id):
+#        cursor = self.conn.cursor()
+#        query = '''SELECT route_id, route_name, stop_id, stop_name, latitude, longitude 
+#                   FROM Routes natural inner join StopsInRoutes natural inner join Stops
+#                   ORDER BY route_id, stop_id;'''
+#        cursor.execute(query, (route_id,))
+#        result = []
+#
+#        for row in cursor:
+#            result.append(row)
+#
+#        return result
+
     def getRouteStops(self, route_id):
         cursor = self.conn.cursor()
-        query = '''SELECT route_id, route_name, stop_id, stop_name, latitude, longitude 
+        query = '''SELECT stop_id, stop_name, latitude, longitude 
                    FROM Routes natural inner join StopsInRoutes natural inner join Stops
-                   ORDER BY route_id, stop_id;'''
+                   WHERE route_id = %s;'''
         cursor.execute(query, (route_id,))
         result = []
 

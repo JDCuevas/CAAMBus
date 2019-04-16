@@ -90,7 +90,7 @@ def getTrolleysByCapacity(capacity):
     if request.method == 'GET':
         return TrolleyHandler().getTrolleysByCapacity(capacity)
 
-@app.route('/CAAMBus/trolleys/mileage/<float:mileage_low>-<float:mileage_high>', methods=['GET'])
+@app.route('/CAAMBus/trolleys/mileage/<int:mileage_low>-<int:mileage_high>', methods=['GET'])
 def getTrolleysByMileageRange(mileage_low, mileage_high):
     if request.method == 'GET':
         return TrolleyHandler().getTrolleysByMileageRange(mileage_low, mileage_high)

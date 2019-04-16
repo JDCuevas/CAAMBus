@@ -1,5 +1,6 @@
 from flask import jsonify
 from InfrastructureLayer.trolleyDAO import TrolleyDao
+from DomainLayer.trolley import Trolley
 
 
 class TrolleyHandler:
@@ -12,7 +13,8 @@ class TrolleyHandler:
         trolleys_list = []
 
         for row in result_list:
-            result = self.build_trolley_dict(row)
+            trolley = Trolley(row)
+            result = trolley.trolleyInfo()
             trolleys_list.append(result)
 
         return jsonify(Trolleys=trolleys_list)
@@ -24,8 +26,9 @@ class TrolleyHandler:
         if not row:
             return jsonify(Error="Trolley Not Found"), 404
         else:
-            trolley = self.build_trolley_dict(row)
-            return jsonify(Trolley=trolley)
+            trolley = Trolley(row)
+            result = trolley.trolleyInfo()
+            return jsonify(Trolley=result)
 
     def getTrolleyByPlate(self, plate):
         dao = TrolleyDao()
@@ -34,8 +37,9 @@ class TrolleyHandler:
         if not row:
             return jsonify(Error="Trolley Not Found"), 404
         else:
-            trolley = self.build_trolley_dict(row)
-            return jsonify(Trolley=trolley)
+            trolley = Trolley(row)
+            result = trolley.trolleyInfo()
+            return jsonify(Trolley=result)
 
     def getTrolleysByCapacity(self, capacity):
         dao = TrolleyDao()
@@ -46,7 +50,8 @@ class TrolleyHandler:
             return jsonify(Error="Trolleys Not Found"), 404
         else:
             for row in result_list:
-                result = self.build_trolley_dict(row)
+                trolley = Trolley(row)
+                result = trolley.trolleyInfo()
                 trolleys_list.append(result)
             return jsonify(Trolleys=trolleys_list)
 
@@ -60,7 +65,8 @@ class TrolleyHandler:
             return jsonify(Error="Trolleys Not Found"), 404
         else:
             for row in result_list:
-                result = self.build_trolley_dict(row)
+                trolley = Trolley(row)
+                result = trolley.trolleyInfo()
                 trolleys_list.append(result)
             return jsonify(Trolleys=trolleys_list)
     '''

@@ -1,8 +1,10 @@
 from flask import jsonify
 from InfrastructureLayer.itineraryDAO import ItineraryDao
+from DomainLayer.itinerary import Itinerary
 
 class ItineraryHandler:
     # Schema: itinerary_id, date, start_time, end_time, driver_id, trolley_id, route_id
+    dao = ItineraryDao()
 
     def build_itinerary_dict(self, row):
         result = {}
@@ -38,12 +40,12 @@ class ItineraryHandler:
 
     # Gets
     def getAllItineraries(self):
-        dao = ItineraryDao()
-        result_list = dao.getAllItineraries()
+        result_list = self.dao.getAllItineraries()
         itinerary_list = []
 
         for row in result_list:
-            result = self.build_itinerary_dict(row)
+            itinerary = Itinerary(row)
+            result = itinerary.itineraryInfo()
             itinerary_list.append(result)
 
         print(itinerary_list)
@@ -52,103 +54,104 @@ class ItineraryHandler:
 
 
     def getItineraryById(self, itinerary_id):
-        dao = ItineraryDao()
-        result = dao.getItineraryById(itinerary_id)
+        result = self.dao.getItineraryById(itinerary_id)
 
         if not result:
             return jsonify(Error="Itinerary Not Found"), 404
         else:
-            itinerary = self.build_itinerary_dict(result)
+            itinerary = Itinerary(result)
+            itinerary = itinerary.itineraryInfo()
             return jsonify(Itinerary=itinerary)
 
     def getItinerariesByDate(self, date):
-        dao = ItineraryDao()
-        result_list = dao.getItinerariesByDate(date)
+        result_list = self.dao.getItinerariesByDate(date)
         itinerary_list = []
 
         if not result_list:
             return jsonify(Error="Itineraries Not Found"), 404
         else:
             for row in result_list:
-                result = self.build_itinerary_dict(row)
+                itinerary = Itinerary(row)
+                result = itinerary.itineraryInfo()
                 itinerary_list.append(result)
             return jsonify(Itineraries=itinerary_list)
 
     def getItinerariesByStartTime(self, start_time):
-        dao = ItineraryDao()
-        result_list = dao.getItinerariesByStartTime(start_time)
+        result_list = self.dao.getItinerariesByStartTime(start_time)
         itinerary_list = []
 
         if not result_list:
             return jsonify(Error="Itineraries Not Found"), 404
         else:
             for row in result_list:
-                result = self.build_itinerary_dict(row)
+                itinerary = Itinerary(row)
+                result = itinerary.itineraryInfo()
                 itinerary_list.append(result)
             return jsonify(Itineraries=itinerary_list)
 
     def getItinerariesByEndTime(self, end_time):
-        dao = ItineraryDao()
-        result_list = dao.getItinerariesByEndTime(end_time)
+        result_list = self.dao.getItinerariesByEndTime(end_time)
         itinerary_list = []
 
         if not result_list:
             return jsonify(Error="Itineraries Not Found"), 404
         else:
             for row in result_list:
-                result = self.build_itinerary_dict(row)
+                itinerary = Itinerary(row)
+                result = itinerary.itineraryInfo()
                 itinerary_list.append(result)
             return jsonify(Itineraries=itinerary_list)
 
     def getItinerariesByDriverId(self, driver_id):
-        dao = ItineraryDao()
-        result = dao.getItinerariesByDriverId(driver_id)
+        result_list = self.dao.getItinerariesByDriverId(driver_id)
+        itinerary_list = []
 
-        if not result:
-            return jsonify(Error="Itinerary Not Found"), 404
+        if not result_list:
+            return jsonify(Error="Itineraries Not Found"), 404
         else:
-            itinerary = self.build_itinerary_dict(result)
-            return jsonify(Itinerary=itinerary)
+            for row in result_list:
+                itinerary = Itinerary(row)
+                result = itinerary.itineraryInfo()
+                itinerary_list.append(result)
+            return jsonify(Itineraries=itinerary_list)
 
     def getItinerariesByTrolleyId(self, trolley_id):
-        dao = ItineraryDao()
-        result = dao.getItinerariesByTrolleyId(trolley_id)
+        result = self.dao.getItinerariesByTrolleyId(trolley_id)
 
         if not result:
             return jsonify(Error="Itinerary Not Found"), 404
         else:
-            itinerary = self.build_itinerary_dict(result)
+            itinerary = Itinerary(result)
+            itinerary = itinerary.itineraryInfo()
             return jsonify(Itinerary=itinerary)
 
     def getItinerariesByRouteId(self, route_id):
-        dao = ItineraryDao()
-        result = dao.getItinerariesByRouteId(route_id)
+        result = self.dao.getItinerariesByRouteId(route_id)
 
         if not result:
             return jsonify(Error="Itinerary Not Found"), 404
         else:
-            itinerary = self.build_itinerary_dict(result)
+            itinerary = Itinerary(result)
+            itinerary = itinerary.itineraryInfo()
             return jsonify(Itinerary=itinerary)
-
+            
     def getFullItineraryDetails(self, itinerary_id):
-        dao = ItineraryDao()
-        result = dao.getFullItineraryDetails(itinerary_id)
+        result = self.dao.getFullItineraryDetails(itinerary_id)
 
         if not result:
             return jsonify(Error="Itinerary Not Found"), 404
         else:
-            itinerary = self.build_full_itinerary_dict(result)
+            itinerary = Itinerary(result)
+            itinerary = itinerary.itineraryInfo()
             return jsonify(Itinerary=itinerary)
 
 '''
     # CRUDS
     def insertUser(self):
-        dao = UserDao()
-        user = dao.insertUser()
+        user = self.dao.insertUser()
         return jsonify(User=user), 201
     def updateUser(self, uid, form):
-        dao = UserDao()
-        user = dao.update(uid)
+        user = self.dao.update(uid)
         if not user:
             return jsonify(Error="USER NOT FOUND"), 404
         result = self.build_user_dict(user)

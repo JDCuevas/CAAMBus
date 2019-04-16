@@ -99,7 +99,7 @@ class ItineraryDao:
 
     def getFullItineraryDetails(self, itinerary_id):
         cursor = self.conn.cursor()
-        query = '''SELECT * 
+        query = '''SELECT itinerary_id, date, start_time, end_time, driver_id, first_name, last_name, license, phone, trolley_id, plate, capacity, mileage, route_id, route_name
                    FROM Itineraries natural inner join Drivers natural inner join Trolleys natural inner join Routes
                    WHERE itinerary_id = %s'''
         cursor.execute(query, (itinerary_id,))
