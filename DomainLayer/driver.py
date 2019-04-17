@@ -1,3 +1,5 @@
+from InfrastructureLayer.driverDAO import DriverDao
+
 def driverRepository(data):
 	if isinstance(data, list):
 		result = []
@@ -12,7 +14,13 @@ def driverRepository(data):
 	return result
 
 def driverFactory(frist_name, last_name, license, phone):
-	pass
+	dao = DriverDao()
+
+	driver_id = dao.insert(frist_name, last_name, license, phone)
+	data = dao.getDriverById(driver_id)
+	driver = Driver(data)
+
+	return driver
 
 class Driver:
 	def __init__(self, data=None):

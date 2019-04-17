@@ -1,3 +1,5 @@
+from InfrastructureLayer.trolleyDAO import TrolleyDao
+
 def trolleyRepository(data):
 	if isinstance(data, list):
 		result = []
@@ -11,8 +13,14 @@ def trolleyRepository(data):
 
 	return result
 
-def trolleyFactory(frist_name, last_name, license, phone):
-	pass
+def trolleyFactory(plate, capacity, mileage):
+	dao = TrolleyDao()
+
+	trolley_id = dao.insert(plate, capacity, mileage)
+	data = dao.getTrolleyById(trolley_id)
+	trolley = Trolley(data)
+
+	return trolley
 
 class Trolley:
 	def __init__(self, data=None):

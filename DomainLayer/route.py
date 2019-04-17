@@ -1,3 +1,5 @@
+from InfrastructureLayer.routeDAO import RouteDao
+
 def routeRepository(data):
 	if isinstance(data, list):
 		result = []
@@ -11,8 +13,14 @@ def routeRepository(data):
 
 	return result
 
-def routeFactory(frist_name, last_name, license, phone):
-	pass
+def routeFactory(route_name):
+	dao = RouteDao()
+
+	route_id = dao.insert(route_name)
+	data = dao.getRouteById(route_id)
+	route = Route(data)
+
+	return route
 
 class Route:
 	def __init__(self, data=None):

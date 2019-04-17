@@ -1,3 +1,5 @@
+from InfrastructureLayer.itineraryDAO import ItineraryDao
+
 def itineraryRepository(data):
 	if isinstance(data, list):
 		result = []
@@ -12,7 +14,13 @@ def itineraryRepository(data):
 	return result
 
 def itineraryFactory(date, start_time, end_time, driver_id, trolley_id, route_id):
-	pass
+	dao = ItineraryDao()
+
+	itinerary_id = dao.insert(date, start_time, end_time, driver_id, trolley_id, route_id)
+	data = dao.getItineraryById(itinerary_id)
+	itinerary = Itinerary(data)
+
+	return itinerary
 
 class Itinerary:
 	def __init__(self, data=None):
