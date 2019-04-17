@@ -1,6 +1,6 @@
 from flask import jsonify
 from InfrastructureLayer.trolleyDAO import TrolleyDao
-from DomainLayer.trolley import Trolley
+from DomainLayer.trolley import Trolley, trolleyFactory, trolleyRepository
 
 
 class TrolleyHandler:
@@ -9,74 +9,54 @@ class TrolleyHandler:
     
     def getAllTrolleys(self):
         dao = TrolleyDao()
-        result_list = dao.getAllTrolleys()
+        results_list = dao.getAllTrolleys()
         trolleys_list = []
 
-        for row in result_list:
-            trolley = Trolley(row)
-            result = trolley.trolleyInfo()
-            trolleys_list.append(result)
+        trolleys_list = trolleyRepository(results_list)
 
         return jsonify(Trolleys=trolleys_list)
 
-    def build_trolley_dict(self, row):
-        result = {}
-        result['trolley_id'] = row[0]
-        result['plate'] = row[1]
-        result['capacity'] = row[2]
-        result['mileage'] = row[3]
-
-        return result
-
     def getTrolleyById(self, trolley_id):
         dao = TrolleyDao()
-        row = dao.getTrolleyById(trolley_id)
+        result = dao.getTrolleyById(trolley_id)
 
-        if not row:
+        if not result:
             return jsonify(Error="Trolley Not Found"), 404
         else:
-            trolley = Trolley(row)
-            result = trolley.trolleyInfo()
-            return jsonify(Trolley=result)
+            trolley = trolleyRepository(result)
+            return jsonify(Trolley=trolley)
 
     def getTrolleyByPlate(self, plate):
         dao = TrolleyDao()
-        row = dao.getTrolleyByPlate(plate)
+        result = dao.getTrolleyByPlate(plate)
 
-        if not row:
+        if not result:
             return jsonify(Error="Trolley Not Found"), 404
         else:
-            trolley = Trolley(row)
-            result = trolley.trolleyInfo()
-            return jsonify(Trolley=result)
+            trolley = trolleyRepository(result)
+            return jsonify(Trolley=trolley)
 
     def getTrolleysByCapacity(self, capacity):
         dao = TrolleyDao()
-        result_list = dao.getTrolleysByCapacity(capacity)
+        results_list = dao.getTrolleysByCapacity(capacity)
         trolleys_list = []
 
-        if not result_list:
+        if not results_list:
             return jsonify(Error="Trolleys Not Found"), 404
         else:
-            for row in result_list:
-                trolley = Trolley(row)
-                result = trolley.trolleyInfo()
-                trolleys_list.append(result)
+            trolleys_list = trolleyRepository(results_list)
             return jsonify(Trolleys=trolleys_list)
 
     # Whats the use for this? Better to specify a range
     def getTrolleysByMileageRange(self, mileage_low, mileage_high):
         dao = TrolleyDao()
-        result_list = dao.getTrolleysByMileageRange(mileage_low, mileage_high)
+        results_list = dao.getTrolleysByMileageRange(mileage_low, mileage_high)
         trolleys_list = []
 
-        if not result_list:
+        if not results_list:
             return jsonify(Error="Trolleys Not Found"), 404
         else:
-            for row in result_list:
-                trolley = Trolley(row)
-                result = trolley.trolleyInfo()
-                trolleys_list.append(result)
+            trolleys_list = trolleyRepository(results_list)
             return jsonify(Trolleys=trolleys_list)
     '''
     # CRUDS

@@ -1,6 +1,6 @@
 from flask import jsonify
 from InfrastructureLayer.routeDAO import RouteDao
-from DomainLayer.route import Route
+from DomainLayer.route import Route, routeRepository, routeFactory
 
 
 class RouteHandler:
@@ -9,63 +9,32 @@ class RouteHandler:
     # Stops: stop_id, stop_name, latitude, longitude
     dao = RouteDao()
 
-    def build_route_dict(self, row):
-        result = {}
-        result['route_id'] = row[0]
-        result['route_name'] = row[1]
-
-        return result
-
-    def build_stop_dict(self, row):
-        result = {}
-        result['stop_id'] = row[0]
-        result['stop_name'] = row[1]
-        result['latitude'] = row[2]
-        result['longitude'] = row[3]
-
-        return result
-    '''
-    def build_route_stops_dict(self, row):
-        result = {}
-        result['route_id'] = row[0] 
-        result['route_name'] = row[1] 
-        result['stop_id'] = row[2] 
-        result['stop_name'] = row[3] 
-        result['latitude'] = row[4] 
-        result['longitude'] = row[5] 
-
-        return result
-    '''
     # Gets
     def getAllRoutes(self):
         results_list = self.dao.getAllRoutes()
         routes_list = []
 
-        for row in results_list:
-            result = self.build_route_dict(row)
-            routes_list.append(result)
+        routes_list = routeRepository(results_list)
 
         return jsonify(Routes=routes_list)
 
     def getRouteById(self, route_id):
-        row = self.dao.getRouteById(route_id)
+        result = self.dao.getRouteById(route_id)
 
-        if not row:
+        if not result:
             return jsonify(Error="Route Not Found"), 404
         else:
-            route = Route(row)
-            result = route.routeInfo()
-            return jsonify(Route=result)
-            
+            route = routeRepository(result)
+            return jsonify(Route=route)
+
     def getRouteByName(self, route_name):
-        row = self.dao.getRouteByName(route_name)
+        result = self.dao.getRouteByName(route_name)
 
-        if not row:
+        if not result:
             return jsonify(Error="Route Not Found"), 404
         else:
-            route = Route(row)
-            result = route.routeInfo()
-            return jsonify(Route=result)
+            route = routeRepository(result)
+            return jsonify(Route=route)
 
     def getRouteStops(self, route_id):
         route_data = self.dao.getRouteById(route_id)
@@ -86,15 +55,6 @@ class RouteHandler:
 
             stops_list = route.allStops()
             return jsonify(StopsInRoute=stops_list)
-
-    def getStopById(self, stop_id):
-        row = self.dao.getStopById(stop_id)
-
-        if not row:
-            return jsonify(Error="Stop Not Found"), 404
-        else:
-            stop = self. build_stop_dict(row)
-            return jsonify(Stop=stop)
 
 '''
     # CRUDS

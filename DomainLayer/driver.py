@@ -1,13 +1,20 @@
-class Driver:
-	'''
-	def __init__(self, driver_id=None, first_name=None, last_name=None, license=None, phone=None):
-		self.driver_id = driver_id
-		self.first_name = first_name
-		self.last_name = last_name
-		self. license = license
-		self.phone = phone
-	'''
+def driverRepository(data):
+	if isinstance(data, list):
+		result = []
+		for row in data:
+			driver = Driver(row)
+			result.append(driver.driverInfo())
+	else:
+		print(data)
+		driver = Driver(data)
+		result = driver.driverInfo()
 
+	return result
+
+def driverFactory(frist_name, last_name, license, phone):
+	pass
+
+class Driver:
 	def __init__(self, data=None):
 		self.driver = {}
 

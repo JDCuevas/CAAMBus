@@ -1,3 +1,19 @@
+def trolleyRepository(data):
+	if isinstance(data, list):
+		result = []
+		for row in data:
+			trolley = Trolley(row)
+			result.append(trolley.trolleyInfo())
+	else:
+		print(data)
+		trolley = Trolley(data)
+		result = trolley.trolleyInfo()
+
+	return result
+
+def trolleyFactory(frist_name, last_name, license, phone):
+	pass
+
 class Trolley:
 	def __init__(self, data=None):
 		self.trolley = {}

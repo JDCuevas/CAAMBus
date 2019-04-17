@@ -118,11 +118,6 @@ def getRouteStops(route_id):
     if request.method == 'GET':
         return RouteHandler().getRouteStops(route_id)
 
-@app.route('/CAAMBus/routes/stops/<int:stop_id>', methods=['GET'])
-def getStopById(stop_id):
-    if request.method == 'GET':
-        return RouteHandler().getStopById(stop_id)
-
 ###################### Itineraries ######################
 
 @app.route('/CAAMBus/itineraries', methods=['GET'])

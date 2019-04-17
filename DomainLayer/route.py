@@ -1,3 +1,19 @@
+def routeRepository(data):
+	if isinstance(data, list):
+		result = []
+		for row in data:
+			route = Route(row)
+			result.append(route.routeInfo())
+	else:
+		print(data)
+		route = Route(data)
+		result = route.routeInfo()
+
+	return result
+
+def routeFactory(frist_name, last_name, license, phone):
+	pass
+
 class Route:
 	def __init__(self, data=None):
 		self.route = {}

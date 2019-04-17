@@ -1,7 +1,23 @@
+def itineraryRepository(data):
+	if isinstance(data, list):
+		result = []
+		for row in data:
+			itinerary = Itinerary(row)
+			result.append(itinerary.itineraryInfo())
+	else:
+		print(data)
+		itinerary = Itinerary(data)
+		result = itinerary.itineraryInfo()
+
+	return result
+
+def itineraryFactory(date, start_time, end_time, driver_id, trolley_id, route_id):
+	pass
+
 class Itinerary:
 	def __init__(self, data=None):
 		self.itinerary = {}
-		print(data)
+
 		if len(data) <= 7:
 			self.itinerary['itinerary_id'] = data[0]
 			self.itinerary['date'] = data[1].__str__()
@@ -17,7 +33,6 @@ class Itinerary:
 		return self.itinerary
 
 	def fullItineraryInfo(self, data):
-			print(data)
 			self.itinerary['itinerary_id'] = data[0]
 			self.itinerary['date'] = data[1].__str__()
 			self.itinerary['start_time'] = data[2].__str__()

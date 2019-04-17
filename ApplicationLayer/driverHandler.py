@@ -1,103 +1,84 @@
 from flask import jsonify
 from InfrastructureLayer.driverDAO import DriverDao
-from DomainLayer.driver import Driver
+from DomainLayer.driver import Driver, driverFactory, driverRepository
 
 
 class DriverHandler:
     # Schema: driver_id, first_name, last_name, license, phone
-    
+
     # Gets
     def getAllDrivers(self):
         dao = DriverDao()
-        driver_list = dao.getAllDrivers()
-        result_list = []
+        results_list = dao.getAllDrivers()
+        drivers_list = []
 
-        for row in driver_list:
-            driver = Driver(row)
-            result = driver.driverInfo()
-            result_list.append(result)
+        drivers_list = driverRepository(results_list)
 
-        return jsonify(Driver=result_list)
+        return jsonify(Driver=drivers_list)
 
     def getDriverById(self, driver_id):
         dao = DriverDao()
-        row = dao.getDriverById(driver_id)
+        result = dao.getDriverById(driver_id)
 
-        if not row:
+        if not result:
             return jsonify(Error="Driver Not Found"), 404
         else:
-            driver = Driver(row)
-            driver = driver.driverInfo()
+            ddriver = driverRepository(result)
             return jsonify(Driver=driver)
 
     def getDriversByFirstName(self, first_name):
         dao = DriverDao()
-        driver_list = dao.getDriversByFirstName(first_name)
-        result_list = []
+        results_list = dao.getDriversByFirstName(first_name)
+        drivers_list = []
 
-        if not driver_list:
+        if not results_list:
             return jsonify(Error="Drivers Not Found"), 404
         else:
-            for row in driver_list:
-                driver = Driver(row)
-                result = driver.driverInfo()
-                result_list.append(result)
-            return jsonify(Driver=result_list)
+            drivers_list = driverRepository(results_list)
+            return jsonify(Driver=drivers_list)
 
     def getDriversByLastName(self, last_name):
         dao = DriverDao()
-        driver_list = dao.getDriversByLastName(last_name)
-        result_list = []
+        results_list = dao.getDriversByLastName(last_name)
+        drivers_list = []
 
-        if not driver_list:
+        if not results_list:
             return jsonify(Error="Drivers Not Found"), 404
         else:
-            for row in driver_list:
-                driver = Driver(row)
-                result = driver.driverInfo()
-                result_list.append(result)
-            return jsonify(Driver=result_list)
+            drivers_list = driverRepository(results_list)
+            return jsonify(Driver=drivers_list)
 
-        return jsonify(Driver=driver_list)
+        return jsonify(Driver=drivers_list)
 
     def getDriversByName(self, first_name, last_name):
         dao = DriverDao()
-        driver_list = dao.getDriversByName(first_name, last_name)
-        result_list = []
+        results_list = dao.getDriversByName(first_name, last_name)
+        drivers_list = []
 
-        if not driver_list:
+        if not results_list:
             return jsonify(Error="Drivers Not Found"), 404
         else:
-            for row in driver_list:
-                driver = Driver(row)
-                result = driver.driverInfo()
-                result_list.append(result)
-            return jsonify(Drivers=result_list)
+            drivers_list = driverRepository(results_list)
+            return jsonify(Drivers=drivers_list)
 
     def getDriverByLicense(self, license):
         dao = DriverDao()
-        row = dao.getDriverByLicense(license)
+        result = dao.getDriverByLicense(license)
         
-        if '@' not in license:
-            return jsonify(Error="Not A Valid License"), 404
-        elif not row:
+        if not result:
             return jsonify(Error="Driver Not Found"), 404
         else:
-            driver = Driver(row)
-            driver = driver.driverInfo()
+            driver = driverRepository(result)
             return jsonify(Driver=driver)
 
     def getDriverByPhone(self, phone):
         dao = DriverDao()
-        row = dao.getDriverByPhone(phone)
-        
-        if '@' not in phone:
-            return jsonify(Error="Not A Valid Phone Number"), 404
-        elif not row:
+        result = dao.getDriverByPhone(phone)
+
+        if not result:
             return jsonify(Error="Driver Not Found"), 404
         else:
-            driver = Driver(row)
-            driver = driver.driverInfo()
+            driver = driverRepository(result)
             return jsonify(Driver=driver)
 
 '''
