@@ -1,6 +1,6 @@
 from flask import jsonify
 from InfrastructureLayer.driverDAO import DriverDao
-from DomainLayer.driver import Driver, driverFactory, driverRepository
+from DomainLayer.driver import Driver, driverFactory, driverRepository, getInfo
 
 
 class DriverHandler:
@@ -13,7 +13,7 @@ class DriverHandler:
         drivers_list = []
 
         drivers_list = driverRepository(results_list)
-
+        drivers_list = list(map(getInfo, drivers_list))
         return jsonify(Driver=drivers_list)
 
     def getDriverById(self, driver_id):
@@ -23,7 +23,8 @@ class DriverHandler:
         if not result:
             return jsonify(Error="Driver Not Found"), 404
         else:
-            ddriver = driverRepository(result)
+            driver = driverRepository(result)
+            driver = getInfo(driver)
             return jsonify(Driver=driver)
 
     def getDriversByFirstName(self, first_name):
@@ -35,6 +36,7 @@ class DriverHandler:
             return jsonify(Error="Drivers Not Found"), 404
         else:
             drivers_list = driverRepository(results_list)
+            drivers_list = list(map(getInfo, drivers_list))
             return jsonify(Driver=drivers_list)
 
     def getDriversByLastName(self, last_name):
@@ -46,6 +48,7 @@ class DriverHandler:
             return jsonify(Error="Drivers Not Found"), 404
         else:
             drivers_list = driverRepository(results_list)
+            drivers_list = list(map(getInfo, drivers_list))
             return jsonify(Driver=drivers_list)
 
         return jsonify(Driver=drivers_list)
@@ -59,6 +62,7 @@ class DriverHandler:
             return jsonify(Error="Drivers Not Found"), 404
         else:
             drivers_list = driverRepository(results_list)
+            drivers_list = list(map(getInfo, drivers_list))
             return jsonify(Drivers=drivers_list)
 
     def getDriverByLicense(self, license):
@@ -69,6 +73,7 @@ class DriverHandler:
             return jsonify(Error="Driver Not Found"), 404
         else:
             driver = driverRepository(result)
+            driver = getInfo(driver)
             return jsonify(Driver=driver)
 
     def getDriverByPhone(self, phone):
@@ -79,6 +84,7 @@ class DriverHandler:
             return jsonify(Error="Driver Not Found"), 404
         else:
             driver = driverRepository(result)
+            driver = getInfo(driver)
             return jsonify(Driver=driver)
 
 '''

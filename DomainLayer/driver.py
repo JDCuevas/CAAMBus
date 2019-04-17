@@ -5,11 +5,11 @@ def driverRepository(data):
 		result = []
 		for row in data:
 			driver = Driver(row)
-			result.append(driver.driverInfo())
+			result.append(driver)
 	else:
 		print(data)
 		driver = Driver(data)
-		result = driver.driverInfo()
+		result = driver
 
 	return result
 
@@ -22,6 +22,9 @@ def driverFactory(frist_name, last_name, license, phone):
 
 	return driver
 
+def getInfo(driver):
+	return driver.info()
+
 class Driver:
 	def __init__(self, data=None):
 		self.driver = {}
@@ -33,5 +36,5 @@ class Driver:
 			self.driver['license'] = data[3]
 			self.driver['phone'] = data[4]
 
-	def driverInfo(self):
+	def info(self):
 		return self.driver

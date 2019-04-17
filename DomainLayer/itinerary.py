@@ -5,13 +5,16 @@ def itineraryRepository(data):
 		result = []
 		for row in data:
 			itinerary = Itinerary(row)
-			result.append(itinerary.itineraryInfo())
+			result.append(itinerary)
 	else:
 		print(data)
 		itinerary = Itinerary(data)
-		result = itinerary.itineraryInfo()
+		result = itinerary
 
 	return result
+
+def getInfo(itinerary):
+	return itineraryInfo.info()
 
 def itineraryFactory(date, start_time, end_time, driver_id, trolley_id, route_id):
 	dao = ItineraryDao()
@@ -37,7 +40,7 @@ class Itinerary:
 		else:
 			self.fullItineraryInfo(data)
 
-	def itineraryInfo(self):
+	def info(self):
 		return self.itinerary
 
 	def fullItineraryInfo(self, data):

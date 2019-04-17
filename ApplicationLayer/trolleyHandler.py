@@ -1,6 +1,6 @@
 from flask import jsonify
 from InfrastructureLayer.trolleyDAO import TrolleyDao
-from DomainLayer.trolley import Trolley, trolleyFactory, trolleyRepository
+from DomainLayer.trolley import Trolley, trolleyFactory, trolleyRepository, getInfo
 
 
 class TrolleyHandler:
@@ -13,6 +13,7 @@ class TrolleyHandler:
         trolleys_list = []
 
         trolleys_list = trolleyRepository(results_list)
+        trolleys_list = list(map(getInfo, trolleys_list))
 
         return jsonify(Trolleys=trolleys_list)
 
@@ -24,6 +25,7 @@ class TrolleyHandler:
             return jsonify(Error="Trolley Not Found"), 404
         else:
             trolley = trolleyRepository(result)
+            trolley = getInfo(trolley)
             return jsonify(Trolley=trolley)
 
     def getTrolleyByPlate(self, plate):
@@ -34,6 +36,7 @@ class TrolleyHandler:
             return jsonify(Error="Trolley Not Found"), 404
         else:
             trolley = trolleyRepository(result)
+            trolley = getInfo(trolley)
             return jsonify(Trolley=trolley)
 
     def getTrolleysByCapacity(self, capacity):
@@ -45,6 +48,7 @@ class TrolleyHandler:
             return jsonify(Error="Trolleys Not Found"), 404
         else:
             trolleys_list = trolleyRepository(results_list)
+            trolleys_list = list(map(getInfo, trolleys_list))
             return jsonify(Trolleys=trolleys_list)
 
     # Whats the use for this? Better to specify a range
@@ -57,6 +61,7 @@ class TrolleyHandler:
             return jsonify(Error="Trolleys Not Found"), 404
         else:
             trolleys_list = trolleyRepository(results_list)
+            trolleys_list = list(map(getInfo, trolleys_list))
             return jsonify(Trolleys=trolleys_list)
     '''
     # CRUDS

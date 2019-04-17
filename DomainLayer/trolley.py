@@ -5,11 +5,11 @@ def trolleyRepository(data):
 		result = []
 		for row in data:
 			trolley = Trolley(row)
-			result.append(trolley.trolleyInfo())
+			result.append(trolley)
 	else:
 		print(data)
 		trolley = Trolley(data)
-		result = trolley.trolleyInfo()
+		result = trolley
 
 	return result
 
@@ -22,6 +22,9 @@ def trolleyFactory(plate, capacity, mileage):
 
 	return trolley
 
+def getInfo(trolley):
+	return trolley.info()
+
 class Trolley:
 	def __init__(self, data=None):
 		self.trolley = {}
@@ -32,5 +35,5 @@ class Trolley:
 			self.trolley['capacity'] = data[2]
 			self.trolley['mileage'] = data[3]
 
-	def trolleyInfo(self):
+	def info(self):
 		return self.trolley

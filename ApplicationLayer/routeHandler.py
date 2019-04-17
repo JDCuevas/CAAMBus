@@ -1,6 +1,6 @@
 from flask import jsonify
 from InfrastructureLayer.routeDAO import RouteDao
-from DomainLayer.route import Route, routeRepository, routeFactory
+from DomainLayer.route import Route, routeRepository, routeFactory, getInfo
 
 
 class RouteHandler:
@@ -15,6 +15,7 @@ class RouteHandler:
         routes_list = []
 
         routes_list = routeRepository(results_list)
+        routes_list = list(map(getInfo, routes_list))
 
         return jsonify(Routes=routes_list)
 
@@ -25,6 +26,7 @@ class RouteHandler:
             return jsonify(Error="Route Not Found"), 404
         else:
             route = routeRepository(result)
+            route = getInfo(route)
             return jsonify(Route=route)
 
     def getRouteByName(self, route_name):
@@ -34,6 +36,7 @@ class RouteHandler:
             return jsonify(Error="Route Not Found"), 404
         else:
             route = routeRepository(result)
+            route = getInfo(route)
             return jsonify(Route=route)
 
     def getRouteStops(self, route_id):

@@ -5,13 +5,16 @@ def routeRepository(data):
 		result = []
 		for row in data:
 			route = Route(row)
-			result.append(route.routeInfo())
+			result.append(route)
 	else:
 		print(data)
 		route = Route(data)
-		result = route.routeInfo()
+		result = route
 
 	return result
+
+def getInfo(route):
+	return route.info()
 
 def routeFactory(route_name):
 	dao = RouteDao()
@@ -31,7 +34,7 @@ class Route:
 			self.route['route_id'] = data[0]
 			self.route['route_name'] = data[1]
 
-	def routeInfo(self):
+	def info(self):
 		return self.route
 
 	def allStops(self):

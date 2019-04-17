@@ -1,6 +1,6 @@
 from flask import jsonify
 from InfrastructureLayer.itineraryDAO import ItineraryDao
-from DomainLayer.itinerary import itineraryRepository, itineraryFactory
+from DomainLayer.itinerary import itineraryRepository, itineraryFactory, getInfo
 
 class ItineraryHandler:
     # Schema: itinerary_id, date, start_time, end_time, driver_id, trolley_id, route_id
@@ -17,6 +17,7 @@ class ItineraryHandler:
             itinerary_list.append(result)
         '''
         itinerary_list = itineraryRepository(result_list)
+        itinerary_list = list(map(getInfo, itinerary_list))
 
         return jsonify(Itineraries=itinerary_list)
 
@@ -28,6 +29,7 @@ class ItineraryHandler:
             return jsonify(Error="Itinerary Not Found"), 404
         else:
             itinerary = itineraryRepository(result)
+            itinerary = getInfo(itinerary)
             return jsonify(Itinerary=itinerary)
 
     def getItinerariesByDate(self, date):
@@ -38,6 +40,7 @@ class ItineraryHandler:
             return jsonify(Error="Itineraries Not Found"), 404
         else:
             itinerary_list = itineraryRepository(result_list)
+            itinerary_list = list(map(getInfo, itinerary_list))
             return jsonify(Itineraries=itinerary_list)
 
     def getItinerariesByStartTime(self, start_time):
@@ -48,6 +51,7 @@ class ItineraryHandler:
             return jsonify(Error="Itineraries Not Found"), 404
         else:
             itinerary_list = itineraryRepository(result_list)
+            itinerary_list = list(map(getInfo, itinerary_list))
             return jsonify(Itineraries=itinerary_list)
 
     def getItinerariesByEndTime(self, end_time):
@@ -58,6 +62,7 @@ class ItineraryHandler:
             return jsonify(Error="Itineraries Not Found"), 404
         else:
             itinerary_list = itineraryRepository(result_list)
+            itinerary_list = list(map(getInfo, itinerary_list))
             return jsonify(Itineraries=itinerary_list)
 
     def getItinerariesByDriverId(self, driver_id):
@@ -68,6 +73,7 @@ class ItineraryHandler:
             return jsonify(Error="Itineraries Not Found"), 404
         else:
             itinerary_list = itineraryRepository(result_list)
+            itinerary_list = list(map(getInfo, itinerary_list))
             return jsonify(Itineraries=itinerary_list)
 
     def getItinerariesByTrolleyId(self, trolley_id):
@@ -77,6 +83,7 @@ class ItineraryHandler:
             return jsonify(Error="Itinerary Not Found"), 404
         else:
             itinerary = itineraryRepository(result)
+            itinerary = getInfo(itinerary)
             return jsonify(Itinerary=itinerary)
 
     def getItinerariesByRouteId(self, route_id):
@@ -86,6 +93,7 @@ class ItineraryHandler:
             return jsonify(Error="Itinerary Not Found"), 404
         else:
             itinerary = itineraryRepository(result)
+            itinerary = getInfo(itinerary)
             return jsonify(Itinerary=itinerary)
 
     def getFullItineraryDetails(self, itinerary_id):
@@ -95,6 +103,7 @@ class ItineraryHandler:
             return jsonify(Error="Itinerary Not Found"), 404
         else:
             itinerary = itineraryRepository(result)
+            itinerary = getInfo(itinerary)
             return jsonify(Itinerary=itinerary)
 
 '''
